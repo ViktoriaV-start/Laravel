@@ -1,0 +1,22 @@
+.menu {
+    display: flex;
+    justify-content: space-between;
+    width: 700px;
+    margin: 50px auto;
+
+    &__href {
+        text-decoration: none;
+    }
+
+    &__item {
+    color: $main-color;
+    font-size: 18px;
+    }
+
+    &__item:hover {
+        color: $attention-color;
+    }
+
+}
+
+
