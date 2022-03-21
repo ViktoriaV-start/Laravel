@@ -20,4 +20,27 @@ class IndexController extends Controller
     {
         return view('admin.test2');
     }
+
+
+    public function categoryAdd()
+    {
+        return view('admin.category.add');
+    }
+
+    public function categoryUpdate()
+    {
+        return view('admin.category.update');
+    }
+
+    public function newsAdd()
+    {
+        return view('admin.news.add');
+    }
+
+    public function newsUpdate()
+    {
+        return view('admin.news.update');
+    }
+
+
 }

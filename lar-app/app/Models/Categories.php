@@ -5,21 +5,35 @@ namespace App\Models;
 class Categories
 {
     private $categories = [
-        'world' => [
+        1 => [
             'id' => 1,
-            'title' => 'Мир'
+            'title' => 'Мир',
+            'slug' => 'world'
         ],
-        'business' => [
+        2 => [
             'id' => 2,
-            'title' => 'Бизнес'
+            'title' => 'Бизнес',
+            'slug' => 'business'
         ],
-        'sport' => [
+        3 => [
             'id' => 3,
-            'title' => 'Спорт'
+            'title' => 'Спорт',
+            'slug' => 'sport'
         ],
-        'culture' => [
+        4 => [
             'id' => 4,
-            'title' => 'Культура'
+            'title' => 'Культура',
+            'slug' => 'culture'
+        ],
+        5 => [
+            'id' => 5,
+            'title' => 'Политика',
+            'slug' => 'politics'
+        ],
+        6 => [
+            'id' => 6,
+            'title' => 'Наука',
+            'slug' => 'science'
         ],
     ];
 
@@ -27,8 +41,24 @@ class Categories
         return $this->categories;
     }
 
-    public function getCategoryByName($name) {
-        return $this->getCategories()[$name]  ?? [];
+    public function getCategoryById($id) {
+        return $this->getCategories()[$id]  ?? [];
     }
 
+    public function getCategoryIdBySlug($slug) {
+        $id = null;
+        foreach ($this->getCategories() as $item) {
+            if ($item['slug'] == $slug) {
+                $id = $item['id'];
+                break;
+            }
+        }
+        return $id;
+    }
+
+    public function getCategoryTitleBySlug($slug) {
+        $id = $this->getCategoryIdBySlug($slug);
+        $category = $this->getCategoryById($id);
+        return $category['title'] ?? "Категория отсутствует";
+    }
 }

@@ -9,24 +9,38 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function index(Categories $categories) {
-        return view('news.category', [
+        return view('news.categories', [
             'categories' => $categories->getCategories()
         ]);
     }
 
-    public function show(News $news, Categories $categories, $title) {
-        $categoryItem = $categories->getCategoryByName($title);
-        $categoryNews = [];
+//    public function show(News $news, Categories $categories, $id) {
+////        $categoryItem = $categories->getCategoryById($id);
+////        $categoryNews = [];
+////
+////        foreach ($news->getNews() as $item) {
+////            if ($item['category_id'] === $categoryItem['id']) {
+////                $categoryNews[] = $item;
+////            }
+////        }
+//
+////        dump($categories->getCategoryById($id));
+////        dump($news->getNewsByCategoryId($id));
+//
+//        return view('news.category', [
+//        'category' => $categories->getCategoryById($id),
+//        'news' => $news->getNewsByCategoryId($id)
+//        ]);
+//    }
 
-        foreach ($news->getNews() as $item) {
-            if ($item['category_id'] === $categoryItem['id']) {
-                $categoryNews[] = $item;
-            }
-        }
-
+    public function show(News $news, Categories $categories, $slug) {
+       // dump($news->getNewsByCategoryId($slug));
         return view('news.category', [
-        'category' => $categoryItem,
-        'news' => $categoryNews
+
+            'category' => $categories->getCategoryTitleBySlug($slug),
+            'news' => $news->getNewsByCategorySlug($slug)
         ]);
     }
+
+
 }
