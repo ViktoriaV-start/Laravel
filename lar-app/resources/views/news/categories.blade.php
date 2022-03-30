@@ -12,8 +12,9 @@
             <h3>Новости по категориям</h3>
 
             @forelse($categories as $category)
-                <a class="text-decoration-none text-reset" href="{{ route('news.category.show', $category['slug']) }}" class="nav-link">
-                    <h4 class="text-decoration-none link-secondary">{{ $category['title'] }}</h4>
+
+                <a class="text-decoration-none text-reset" href="{{  route('news.category.show', $category->slug) }}" class="nav-link">
+                    <h4 class="text-decoration-none link-secondary">{{ $category->title }}</h4>
                 </a>
 
             @empty

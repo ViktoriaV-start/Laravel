@@ -12,7 +12,7 @@
         <h3 class="title__h3">Лента новостей</h3>
 
         @forelse($news as $item)
-            <a class="text-decoration-none link-secondary" href="{{ route('news.one', $item['id']) }}"><p class="h5">{{ $item['title'] }}</p></a>
+            <a class="text-decoration-none link-secondary" href="{{ route('news.one', $item->id) }}"><p class="h5">{{ $item->title }}</p></a>
 
         @empty
             <p>Нет новостей</p>

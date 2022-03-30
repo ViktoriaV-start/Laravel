@@ -39,13 +39,18 @@
             .custom-bg {
                 background-color: lightblue;
             }
+            /*#cfe2ff*/
 
-            .bg-custom {
+            .bg-footer {
                 background-color: rgba(240, 244, 248, 0.95);
             }
 
+            .font-colored {
+                color: #159bca;
+            }
+
             .font-nav {
-                font-size: 15px;
+                font-size: 18px;
             }
 
             .category__item:hover {
@@ -101,9 +106,17 @@
 
         <div class="container">
             @yield('menu')
+
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+
             @yield('content')
         </div>
-        <footer class="footer mt-auto py-3 bg-custom">
+        <footer class="footer mt-auto py-3 bg-footer">
     <div class="container">
         <span class="text-muted">&copy 2022 "Ньюс Лайн". Все права защищены.</span>
     </div>

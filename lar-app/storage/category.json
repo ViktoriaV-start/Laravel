@@ -1,0 +1,32 @@
+{
+    "1": {
+        "id": 1,
+        "title": "Мир",
+        "slug": "world"
+    },
+    "2": {
+        "id": 2,
+        "title": "Бизнес",
+        "slug": "business"
+    },
+    "3": {
+        "id": 3,
+        "title": "Спорт",
+        "slug": "sport"
+    },
+    "4": {
+        "id": 4,
+        "title": "Культура",
+        "slug": "culture"
+    },
+    "5": {
+        "id": 5,
+        "title": "Политика",
+        "slug": "politics"
+    },
+    "6": {
+        "id": 6,
+        "title": "Наука",
+        "slug": "science"
+    }
+}

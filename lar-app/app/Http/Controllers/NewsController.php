@@ -4,32 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
-    public function index(News $news) {
+    public function index() {
 
-// в обычном случае без Laravel было бы необходимо создавать новый экземпляр
-// класса News(модель), например, здесь : $news = new News(); - это жесткая зависимость, привязанность к экземпляру
-// Но Laravel дает возможность создавать и передавать экзепляр снаружи (инверсия зависимости) -
-// для этого такая запись: public function index(News $news) {
+        //$news = DB::select('SELECT * FROM `news` WHERE 1'); - ВОЗВРАЩАЕТ ОБЪЕКТ-КОЛЛЕКЦИЮ, ЭТО НЕ МАССИВ
+        $news = DB::table('news')->get(); //getAll
+        return view('news.index')->with('news', $news);
 
-        return view('news.index')->with('news', $news->getNews());
-        //news.index - здесь запись папка.имяФайла
-        // Отобразить вьюху, путь к которому: views/news/index,
-        // и передать туда (в шаблон) переменную $news->getNews() - это будет массив, в которую загрузили данные из класса News
-        // В шаблоне эта переменная будет доступна как $news. То есть ->with('имя_переменной_в_шаблоне', $наша_текущая переменная)
     }
 
-    public function show(News $news, int $id) {
+    public function show(int $id)
+        {
+
+            //$news = DB::select('SELECT * FROM `news` WHERE id = :id', ['id' => $id]);
+            $news = DB::table('news')->find($id); //getOne($id)
+
+            return view('news.one')->with('news', $news);
+        }
 
 
-        return view('news.one')->with('news', $news->getNewsId($id));
-    }
 
     public function showList(News $news) {
-//        $news = News::getNewsId($id);
-//dd($category);
         return view('news.category')->with('news', $news);
     }
 }
