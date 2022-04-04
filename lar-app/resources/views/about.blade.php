@@ -67,7 +67,7 @@
 
         </form>
 
-        <span class="font-colored {{ $sucсess }}">Комментарий отправлен </span>
+        <span class="font-colored {{ $done}}">Комментарий отправлен </span>
 
     </main>
 @endsection

@@ -1,10 +1,8 @@
 @extends('layouts.admin')
-{{--расширяет главный layout, который находится по указанному пути--}}
 
 @section('title')
     @parent Новости
 @endsection
-
 
 @section('content')
     {{--    передать в главный layout сам контент--}}
@@ -15,9 +13,6 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <a class="me-2" href="{{ route('admin.news.create') }}">
                 <button type="button" class="btn btn-sm btn-outline-secondary btn-width">Добавить</button>
-            </a>
-            <a href="{{ route('admin.news.edit') }}">
-                <button type="button" class="btn btn-sm btn-outline-secondary btn-width">Редактировать</button>
             </a>
         </div>
     </div>
@@ -39,13 +34,28 @@
             @forelse($news as $item)
                 <tr>
                     <td>{{ $item->id }}</td>
-                    <td>{{ $item->category_title }}</td>
+
+                    <td>
+                        @foreach($categoriesTitle as $category)
+                            @if ($category->id == $item->category_id)
+                            {{ $category->title }}
+                            @endif
+                        @endforeach
+                    </td>
+
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->text }}</td>
                     <td>{{ !$item->isPrivate ? 'открытая' : 'закрытая' }}</td>
                     <td>{{ $item->status }}</td>
-                    <td><a href="{{ route('admin.news.edit') }}">Редактировать</a>
-                        <a href="javascript:;" style="color:red;">Удалить</a>
+                    <td>
+                        <form action="{{ route('admin.news.destroy', $item) }}" method="post">
+
+                            <a href="{{ route('admin.news.edit', $item) }}" class="font-colored nav-link p-0">Редактировать</a>
+                            @csrf
+                            @method('DELETE')
+{{--                            // скрытый инпут с именем _method и значением DELETE--}}
+                            <button type="submit" class="btn-delete">Удалить</button>
+                        </form>
                     </td>
                 </tr>
 
@@ -55,9 +65,5 @@
             </tbody>
         </table>
     </div>
-
-
-
-
-
+    <div class="mt-5">{{ $news->links() }}</div>
 @endsection

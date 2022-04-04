@@ -11,7 +11,7 @@
 {{--        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>--}}
 {{--    </div>--}}
 
-    <form method="POST" action="{{ route('admin.news.create') }}">
+    <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row mb-3">
@@ -73,10 +73,18 @@
 
         </div>
 
+        <div class="form-group row mb-3">
+            <label for="image" class="col-md-2 col-form-label text-md-end">Добавить изображение</label>
+            <div class="col-md-1">
+                <input type="file" name="image">
+            </div>
+
+        </div>
+
         <div class="form-group row mb-0">
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2 offset-md-2">
-                    <button type="submit" class="btn btn-sm btn-outline-secondary btn-width shadow-sm">Добавить</button>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary btn-colored shadow-sm">Добавить новость</button>
                 </div>
             </div>
         </div>

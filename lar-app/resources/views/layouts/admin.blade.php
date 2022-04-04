@@ -27,10 +27,34 @@
             .main-color {
                 background-color: lightblue;
             }
+            .font-colored {
+                color: #159bca;
+            }
 
             .btn-width {
                 width: 150px;
             }
+
+            .btn-colored {
+                color: #696969ff;
+                background-color: #ADD8E6FF;
+                height: 2.5rem;
+                font-size: 0.9rem;
+                width: 12rem;
+                border: none;
+            }
+
+            .btn-colored:hover {
+                background-color: #83afbd;
+            }
+
+            .btn-delete {
+                color: red;
+                background-color: transparent;
+                border: none;
+                padding-left: 0;
+            }
+
             .mt-0-6 {
                 margin-top: 0.6rem;
             }
@@ -80,7 +104,7 @@
                             </li>
                             <li class="nav-item">
 {{--                                <a class="nav-link active" href="{{ route('admin.category.create') }}">--}}
-                                <a class="nav-link {{ request()->routeIs('admin.categories')?'active':'' }}" href="{{ route('admin.categories') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.category.index')?'active':'' }}" href="{{ route('admin.category.index') }}">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder2 mb-1" viewBox="0 0 16 16">
                                         <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z"/>
@@ -91,7 +115,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.news')?'active':'' }}" href="{{ route('admin.news') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.news')?'active':'' }}" href="{{ route('admin.news.index') }}">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list mb-1" viewBox="0 0 16 16">
                                         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>

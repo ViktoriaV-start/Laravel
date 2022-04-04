@@ -2,19 +2,92 @@
 
 @section('title', 'Редактировать новости')
 
-
-{{--@section('menu')--}}
-{{--    @include('menu')--}}
-{{--@endsection--}}
-
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Редактировать новости</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary btn-width">Редактировать</button>
-            </div>
-        </div>
+        <h1 class="h2">Редактировать новость</h1>
     </div>
 
-@endsection
+    <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data">
+        @csrf
+        @if ($news->id) @method('PUT') @endif
+
+        <div class="form-group row mb-3">
+            <label for="title" class="col-md-2 col-form-label text-md-end">Заголовок</label>
+
+            <div class="col-md-8">
+                <input id="title" type="text" class="form-control" name="title" value="{{ $news->title }}" autofocus>
+            </div>
+
+
+
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="category" class="col-md-2 col-form-label text-md-end">Категория новости</label>
+            <div class="col-md-8">
+                <select class="form-select" name="category_id" id="category">
+                    @foreach($categories as $item)
+
+                        <option
+
+                            @if ($item->id == $news->category_id)
+                            selected
+                            @endif
+
+                            value="{{ $item->id }}">
+
+                            {{ $item->title }}
+
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="status" class="col-md-2 col-form-label text-md-end">Статус</label>
+            <div class="col-md-8">
+                <select class="form-select" name="status" id="status">
+                    <option @if($news->status === 'active') selected @endif value="active">active</option>
+                    <option @if($news->status === 'blocked') selected @endif value="blocked">blocked</option>
+                    <option @if($news->status === 'blocked') selected @endif value="blocked">draft</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="newsText" class="col-md-2 col-form-label text-md-end">Текст новости</label>
+            <div class="col-md-8">
+                <textarea id="newsText" type="text" class="form-control" name="text">{{ $news->text }}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="newsPrivate" class="col-md-2 col-form-label text-md-end">Приватная</label>
+            <div class="col-md-1">
+                <input class="form-check-input mt-0-6"
+                       @if ($news->isPrivate == 1) checked @endif
+                       name="isPrivate" type="checkbox" value="1" id="newsPrivate">
+            </div>
+
+        </div>
+
+        <div class="form-group row mb-3">
+            <label for="image" class="col-md-2 col-form-label text-md-end">Добавить изображение</label>
+            <div class="col-md-1">
+                <input type="file" name="image">
+            </div>
+
+        </div>
+
+        <div class="form-group row mb-0">
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2 offset-md-2">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary btn-colored shadow-sm">Сохранить изменения</button>
+                </div>
+            </div>
+        </div>
+
+
+        </form>
+    @endsection

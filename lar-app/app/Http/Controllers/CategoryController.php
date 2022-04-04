@@ -8,20 +8,19 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(Category $categories) {
+    public function index() {
         return view('news.categories', [
-            'categories' => $categories->getCategories()
+            'categories' => Category::all()
         ]);
     }
 
-    public function show(News $news, Category $categories, $slug) {
-       // dump($news->getNewsByCategoryId($slug));
+    public function show($slug) {
+        $category = Category::query()->where('slug', $slug)->first();
+
         return view('news.category', [
-
-            'category' => $categories->getCategoryTitleBySlug($slug),
-            'news' => $news->getNewsByCategorySlug($slug)
+            'categories' => Category::all(),
+            'category' => $category->title,
+            'news' => $category->news
         ]);
     }
-
-
 }

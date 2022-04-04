@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -14,20 +15,26 @@ class AboutController extends Controller
             $regexp = '/^([!#$%&*-+{}|?\~\w]+(.?[\w]+)*@([\w-]{1,255}\.)[\w-]{2,4})?$/';
 
                 if (preg_match($regexp, $mail) == 0) {
-                    return view('about',
-                        ['message' => 'Введите корректный адрес элетронной почты',
-                         'mailWarn' => '',
-                         'sucсess' => 'd-none']);
+                    return view('about', [
+                        'categories' => Category::all(),
+                        'message' => 'Введите корректный адрес элетронной почты',
+                        'mailWarn' => '',
+                        'done' => 'd-none']);
                 } else {
-                    return view('about',
-                        ['message' => 'Введите правильный адрес элетронной почты',
-                         'mailWarn' => 'd-none',
-                         'sucсess' => '']);
+                    return view('about', [
+                        'categories' => Category::all(),
+                        'success' => 'Сообщение',
+                        'message' => '',
+                        'mailWarn' => '',
+                        'done' => '']);
                 }
         }
-        return view('about',
-            ['message' => 'Введите правильный адрес элетронной почты',
-             'mailWarn' => 'd-none',
-             'sucсess' => 'd-none']);
+        return view('about', [
+            'categories' => Category::all(),
+            'message' => '',
+            'mailWarn' => 'd-none',
+            'done' => 'd-none']);
     }
 }
+
+

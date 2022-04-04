@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Faker;
 use Illuminate\Support\Facades\DB;
 
-class UsersSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.

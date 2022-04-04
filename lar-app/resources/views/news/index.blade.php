@@ -18,6 +18,8 @@
             <p>Нет новостей</p>
         @endforelse
 
+        <div class="mt-5">{{ $news->links() }}</div>
+
     </main>
 @endsection
 
