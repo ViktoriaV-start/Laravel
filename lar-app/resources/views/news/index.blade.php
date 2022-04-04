@@ -2,24 +2,21 @@
 
 @section('title', 'Лента новостей')
 
-
-
 @section('menu')
     @include('menu')
 @endsection
 
 @section('content')
-
     <main class="news-line container">
-    <h1 class="title__h1">Новостной сайт Ньюс-Лайн</h1>
-    <h3 class="title__h3">Лента новостей</h3>
 
-    @forelse($news as $item)
-        <a href="{{ route('one', $item['id']) }}" class="news-line__href"><h3 class="title__h3 news-line__item">{{ $item['title'] }}</h3></a>
+        <h3 class="title__h3">Лента новостей</h3>
 
-    @empty
-        <p>Нет новостей</p>
-    @endforelse
+        @forelse($news as $item)
+            <a class="text-decoration-none link-secondary" href="{{ route('news.one', $item->id) }}"><p class="h5">{{ $item->title }}</p></a>
+
+        @empty
+            <p>Нет новостей</p>
+        @endforelse
 
     </main>
 @endsection
