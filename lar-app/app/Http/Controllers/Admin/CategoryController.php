@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -31,17 +31,26 @@ class CategoryController extends Controller
             'category' => $category
         ]);
     }
-    public function store(Request $request, Category $category) {
-        $request->flash(); // метод фиксирует все данные от пользователя (сохраняются в одноразовую сессию),
-        $category->fill($request->all())->save();
+    public function store(CategoryRequest $request, Category $category) {$request->flash();
+        $request->validated();
 
-        return redirect()->route('admin.category.index')->with('success', 'Категория успешно добавлена');
+        $saveStatus = $category->fill($request->all())->save();
+
+        if ($saveStatus) {
+            return redirect()->route('admin.category.index')->with('success', 'Категория успешно добавлена');
+        }
+        return back()->with('error', 'Ошибка при сохранении');
     }
 
-    public function update(Request $request, Category $category) {
-        $request->flash();
-        $category->fill($request->all())->save();
-        return redirect()->route('admin.category.index')->with('success', 'Категория изменена');
+    public function update(CategoryRequest $request, Category $category) {
+
+        $request->validated();
+
+        $saveStatus = $category->fill($request->all())->save();
+        if ($saveStatus) {
+            return redirect()->route('admin.category.index')->with('success', 'Категория изменена');
+        }
+        return back()->with('error', 'Ошибка при сохранении');
     }
 
     public function destroy(Category $category) {

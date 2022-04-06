@@ -24,7 +24,7 @@ class RouteTest extends TestCase
     public function test_admin_news()
     {
         $value = 'admin.allNews';
-        $response = $this->get(route('admin.news'));
+        $response = $this->get(route('admin.news.index'));
         $response->assertViewIs($value);
     }
 
@@ -55,18 +55,5 @@ class RouteTest extends TestCase
         $response = $this->get(route('admin.category.create'));
         $response->assertViewIs($value);
     }
-
-    public function test_admin_news_edit()
-    {
-        $value = 'admin.news.edit';
-        $response = $this->get(route('admin.news.edit'));
-        $response->assertViewIs($value);
-    }
-
-
-
-
-
-
 
 }

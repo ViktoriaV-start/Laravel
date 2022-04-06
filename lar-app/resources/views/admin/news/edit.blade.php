@@ -7,6 +7,13 @@
         <h1 class="h2">Редактировать новость</h1>
     </div>
 
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data">
         @csrf
         @if ($news->id) @method('PUT') @endif
@@ -18,7 +25,15 @@
                 <input id="title" type="text" class="form-control" name="title" value="{{ $news->title }}" autofocus>
             </div>
 
-
+            {{--            Логика для ошибки: блок будет генерироваться в случае ошибки --}}
+            @if($errors->has('title'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('title') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
+{{--            @error('title'){{ $message }} @enderror--}}
 
         </div>
 
@@ -42,6 +57,14 @@
                     @endforeach
                 </select>
             </div>
+            {{--            Логика для ошибки: блок будет генерироваться в случае ошибки --}}
+            @if($errors->has('category_id'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('category_id') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-3">
@@ -53,6 +76,13 @@
                     <option @if($news->status === 'blocked') selected @endif value="blocked">draft</option>
                 </select>
             </div>
+            @if($errors->has('status'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('status') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-3">
@@ -60,6 +90,13 @@
             <div class="col-md-8">
                 <textarea id="newsText" type="text" class="form-control" name="text">{{ $news->text }}</textarea>
             </div>
+            @if($errors->has('text'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('text') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-3">
@@ -69,7 +106,13 @@
                        @if ($news->isPrivate == 1) checked @endif
                        name="isPrivate" type="checkbox" value="1" id="newsPrivate">
             </div>
-
+            @if($errors->has('isPrivate'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('isPrivate') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-3">
@@ -77,7 +120,13 @@
             <div class="col-md-1">
                 <input type="file" name="image">
             </div>
-
+            @if($errors->has('image'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('image') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-0">

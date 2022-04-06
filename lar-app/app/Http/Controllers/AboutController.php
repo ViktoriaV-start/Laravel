@@ -21,12 +21,13 @@ class AboutController extends Controller
                         'mailWarn' => '',
                         'done' => 'd-none']);
                 } else {
-                    return view('about', [
-                        'categories' => Category::all(),
-                        'success' => 'Сообщение',
-                        'message' => '',
-                        'mailWarn' => '',
-                        'done' => '']);
+//                    return view('about', [
+//                        'categories' => Category::all(),
+//                        'success' => 'Сообщение',
+//                        'message' => '',
+//                        'mailWarn' => '',
+//                        'done' => '']);
+                    redirect()->route('about')->with('success', 'Сообщение успешно отправлено');
                 }
         }
         return view('about', [

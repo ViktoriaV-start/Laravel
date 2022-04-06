@@ -15,7 +15,7 @@ class LocationTest extends TestCase
      */
     public function test_location()
     {
-        $uri = 'http://localhost';
+        $uri = 'http://192.168.56.56';
         $response = $this->get(route('admin.index'));
         $response->assertLocation($uri);
     }

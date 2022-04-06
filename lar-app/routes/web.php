@@ -53,25 +53,9 @@ Route::name('admin.') //задать префикс для имени-псевд
         Route::get('/test2', [AdminController::class, 'test2'])->name('test2');
 
         Route::resource('/category', AdminCategoryController::class)->except('show');
-//        Route::name('category.')
-//        ->prefix('category')
-//        ->group(function() {
-//            Route::get('/', [AdminCategoryController::class, 'index'])->name('index');
-//            Route::match(['get', 'post'], '/create', [AdminCategoryController::class, 'create'])->name('create');
-//            Route::match(['get', 'post'],'/edit', [AdminCategoryController::class, 'edit'])->name('edit');
-//        });
 
         Route::resource('/news', AdminNewsController::class)->except('show');
-//        Route::name('news.')
-//        ->prefix('news')
-//        ->group(function() {
-//            Route::get('/', [AdminNewsController::class, 'index'])->name('index');
-//            Route::get('/create', [AdminNewsController::class, 'create'])->name('create');
-//            Route::post('/store', [AdminNewsController::class, 'store'])->name('store');
-//            Route::get('/{news}/edit', [AdminNewsController::class, 'edit'])->name('edit');
-//            Route::put('/{news}/update', [AdminNewsController::class, 'update'])->name('update');
-//            Route::delete('/{news}', [AdminNewsController::class, 'destroy'])->name('destroy');
-//        });
+
     });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
