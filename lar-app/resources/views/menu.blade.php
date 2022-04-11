@@ -16,7 +16,18 @@
     </nav>
 </div>
 
-<a class="p-2 text-decoration-none link-secondary" href="{{ route('admin.index') }}"><span class="font-nav">Админ</span></a>
+<!-- @guest
+@else
+@if(Auth::user()->email === 'admin@admin.ru')
+<a class="p-2 text-decoration-none link-secondary" href="{{ route('admin.index') }}">
+    <span class="font-nav">Админ</span>
+</a>
+@endif
+@endguest -->
+
+<a class="p-2 text-decoration-none link-secondary" href="{{ route('admin.index') }}">
+    <span class="font-nav">Админ</span>
+</a>
 
 {{--d({{ request()->getRequestUri() == '/news/category/culture'?1:2 }});--}}
 

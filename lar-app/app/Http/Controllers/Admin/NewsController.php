@@ -16,19 +16,11 @@ use Illuminate\Support\Facades\Storage;
 class NewsController extends Controller
 {
     public function index() {
-//        $news = DB::table('news')
-//            ->join('categories', 'categories.id', '=', 'news.category_id')
-//            ->select('news.*', 'categories.title as category_title' )
-//            ->orderBy('id')
-//            ->get();
-
         return view('admin.allNews', [
             'news' => News::paginate(10),
             'categories' => Category::all(),
             'categoriesTitle' => Category::query()->select(['id', 'title'])->get() //???
         ]);
-
-
     }
 
     public function create()
