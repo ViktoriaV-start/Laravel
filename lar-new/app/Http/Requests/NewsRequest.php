@@ -28,7 +28,7 @@ class NewsRequest extends FormRequest
         // (name='title', плюс 'text', 'status', 'isPrivate', 'category_id', 'image'), смотрим их в Request.
     {
         return [
-            'title' => 'required|min:5|max:20',
+            'title' => 'required|min:5|max:150',
             'text' => 'required|min:5|max:1500',
             'status' => [
                 'required',

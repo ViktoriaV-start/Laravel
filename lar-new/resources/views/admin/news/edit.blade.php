@@ -86,9 +86,9 @@
         </div>
 
         <div class="form-group row mb-3">
-            <label for="newsText" class="col-md-2 col-form-label text-md-end">Текст новости</label>
+            <label for="editor" class="col-md-2 col-form-label text-md-end">Текст новости</label>
             <div class="col-md-8">
-                <textarea id="newsText" type="text" class="form-control" name="text">{{ $news->text }}</textarea>
+                <textarea id="editor" type="text" class="form-control" name="text">{!! $news->text !!}</textarea>
             </div>
             @if($errors->has('text'))
                 <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
@@ -139,4 +139,33 @@
 
 
         </form>
-    @endsection
+@endsection
+
+@push('js')
+{{--    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>--}}
+
+
+{{--<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/inline/ckeditor.js"></script>--}}
+
+<script src="{{ asset('ckeditor5-build-classic/ckeditor.js') }}"></script>
+
+<script>
+    var options = {
+        filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+        filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+        filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+        filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+
+    };
+</script>
+
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+
+@endpush
+

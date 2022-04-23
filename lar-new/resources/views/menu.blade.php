@@ -18,7 +18,9 @@
             <span class="font-nav">Бизнес</span>
         </a>
 
-        <a class="p-2 text-decoration-none link-secondary"  href="#">
+        <a class="p-2 text-decoration-none link-secondary
+        {{ request()->getRequestUri() == '/news/category/politics'?'font-colored':'' }}"
+           href="{{ route('news.category.show', 'politics') }}">
             <span class="font-nav">Политика</span>
         </a>
 

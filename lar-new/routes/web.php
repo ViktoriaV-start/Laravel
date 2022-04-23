@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\SourceController as AdminSourceController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
 use App\Http\Controllers\Admin\ParserController;
 use \App\Http\Controllers\ProfileController;
@@ -76,6 +77,7 @@ Route::name('admin.') //задать префикс для имени-псевд
 
         Route::resource('/category', AdminCategoryController::class)->except('show');
         Route::resource('/news', AdminNewsController::class)->except('show');
+        Route::resource('/source', AdminSourceController::class)->except('show');
 
     });
 
@@ -92,3 +94,10 @@ Route::get('/auth/vk/response', [LoginController::class, 'responseVK'])->name('v
 Route::get('/auth/gh', [LoginController::class, 'loginGH'])->name('ghLogin');
 // здесь - как в самой соцсети
 Route::get('/auth/gh/response', [LoginController::class, 'responseGH'])->name('ghResponse');
+
+// для файлового менеджера
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'is_admin']], function () {
+
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+
+});

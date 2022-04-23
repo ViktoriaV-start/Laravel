@@ -8,6 +8,8 @@ use App\Http\Requests\NewsRequest as NewsRequest;
 use App\Http\Requests\News\EditRequest as NewsEditRequest;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\Source;
+use App\Services\UploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -18,8 +20,9 @@ class NewsController extends Controller
     public function index() {
         return view('admin.allNews', [
             'news' => News::orderByDesc('created_at')->paginate(10),
-            'categories' => Category::all(),
-            'categoriesTitle' => Category::query()->select(['id', 'title'])->get() //???
+//            'categories' => Category::all(),
+            'categoriesTitle' => Category::query()->select(['id', 'title'])->get(), //???
+            'sourcesTitle' => Source::query()->select(['id', 'title'])->get()
         ]);
     }
 
@@ -66,23 +69,24 @@ class NewsController extends Controller
         ]);
     }
 
-    public function destroy(News $news) {
+    public function destroy(News $news): \Illuminate\Http\RedirectResponse
+    {
         $news->delete();
         return redirect()->route('admin.news.index');
     }
 
-    public function update(NewsRequest $request,News $news) {
-        $request->validated();
+    public function update(NewsRequest $request,News $news): \Illuminate\Http\RedirectResponse
+    {
 
-        $url = null;
-        if ($request->file('image')) {
-            $path = Storage::putFile('public/img', $request->file('image'));
-            $url = Storage::url($path);
+        $validated = $request->validated();
+        // это будет массив с проверенными заполненными полями данными, которые пришли из формы
+
+        if ($request->hasFile('image')) {
+            $service = app(UploadService::class);
+            $validated['image'] = $service->uploadFile($request->file('image')); // путь до файла, который мы загрузим в БД
         }
 
-        $news->image = $url;
-
-        $saveStatus = $news->fill($request->all())->save();
+        $saveStatus = $news->fill($validated)->save();
         if ($saveStatus) {
             return redirect()->route('news.one', $news->id)->with('success', 'Новость изменена');
         }

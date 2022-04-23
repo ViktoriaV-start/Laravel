@@ -12,7 +12,8 @@ class News extends Model
     'status',
     'isPrivate',
     'category_id',
-    'image'];
+    'image',
+    'updated_at'];
 
 //    public function category() {
 //        return $this->belongsTo(Category::class, 'category_id')->first();

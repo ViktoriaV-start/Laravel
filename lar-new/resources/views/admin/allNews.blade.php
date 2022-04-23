@@ -25,6 +25,7 @@
                 <th>Категория</th>
                 <th>Заголовок</th>
                 <th>Текст</th>
+                <th>Ресурс</th>
                 <th>Время</th>
                 <th>Приватность</th>
                 <th>Статус</th>
@@ -45,8 +46,18 @@
                     </td>
 
                     <td>{{ $item->title }}</td>
-                    <td>{{ $item->text }}</td>
-                    <td>{{ $item->created_at }}</td>
+                    <td>{!!  $item->text !!}</td>
+
+                    <td>
+                        @foreach($sourcesTitle as $source)
+                            @if ($source->id == $item->source_id)
+                                {{ $source->title }}
+                            @endif
+                        @endforeach
+                    </td>
+
+                    <td>{{ $item->created_at }}
+                    </td>
                     <td>{{ !$item->isPrivate ? 'открытая' : 'закрытая' }}</td>
                     <td>{{ $item->status }}</td>
                     <td>

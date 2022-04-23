@@ -31,6 +31,7 @@ class CategoryController extends Controller
                 'category' => $category
             ]);
     }
+
     public function store(CategoryRequest $request, Category $category) {
         $request->flash();
         $request->validated();

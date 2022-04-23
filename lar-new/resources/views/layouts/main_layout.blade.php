@@ -112,7 +112,7 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
-                            
+
                             @guest
                                 @if (Route::has('login'))
                                     <li class="nav-item">
@@ -180,5 +180,6 @@
         <span class="text-muted">&copy 2022 "Ньюс Лайн". Все права защищены.</span>
     </div>
 </footer>
+
     </body>
 </html>
