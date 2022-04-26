@@ -35,7 +35,7 @@ class NewsRequest extends FormRequest
                 Rule::in(['active', 'blocked', 'draft']) // такой синтаксис для правила in
             ],
 
-//            'isPrivate' => 'required',
+            'isPrivate' => 'sometimes|in:1',
 
             'category_id' => 'required|exists:App\Models\Category,id', // ВНИМАНИЕ: здесь происходит вставка модели,
             // проверка на существование
