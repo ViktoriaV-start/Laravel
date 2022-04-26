@@ -6,26 +6,20 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\IndexController as AdminController;
+use \App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::match(['get', 'post'],'/about', [AboutController::class, 'index'])->name('about');
-//->name('about') - это псевдоним для использования в шаблоне view для обозначения того урла,
-// который задается здесь в первых кавычках: view('/about')
 
-//Route::get('/news', [NewsController::class, 'index'])->name('news.index');
-//Route::get('/news/one/{id}', [NewsController::class, 'show'])->where('id', '[0-9]+')->name('news.one');
-//Route::get('/news/categories', [CategoryController::class, 'index'])->name('news.category.index');
-////Route::get('/news/category/{id}', [CategoryController::class, 'show'])->name('news.category.show');
-//Route::get('/news/category/{slug}', [CategoryController::class, 'show'])->name('news.category.show');
-
-    // Эту группу роутов, которые начинаются c news, необходимо сгруппировать следующим образом:
-
+// Роуты для новостей на самом сайте (не админ)
 Route::name('news.')
     ->prefix('news')
     ->group(function() {
@@ -35,7 +29,6 @@ Route::name('news.')
         Route::name('category.')
             ->group(function () {
                 Route::get('/categories', [CategoryController::class, 'index'])->name('index');
-//Route::get('/news/category/{id}', [CategoryController::class, 'show'])->name('news.category.show');
                 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('show');
             });
 
@@ -45,38 +38,46 @@ Route::name('news.')
 Route::name('admin.') //задать префикс для имени-псевдонима в ссылке меню: то есть выглядит как бы так ->name('admin.index')
     ->prefix('admin') // а это часть идет как префикс для uri, там где сейчас '/' автоматом становится '/admin',
     // где сейчас в uri '/test1' - автоматически подставится префикс, чтобы получилось '/admin/test1'
+    ->middleware(['auth', 'is_admin'])
     ->group(function () {
+        Route::match(['get', 'post'], '/profile', [ProfileController::class, 'update'])->name('updateProfile');
         Route::get('/', [AdminController::class, 'index'])->name('index');
 //        Route::get('/categories', [AdminController::class, 'categories'])->name('categories');
 //        Route::get('/news', [AdminNewsController::class, 'index'])->name('news');
         Route::get('/test1', [AdminController::class, 'test1'])->name('test1');
         Route::get('/test2', [AdminController::class, 'test2'])->name('test2');
 
+
+
+
+        Route::get('/user/index', [AdminUserController::class, 'index'])->name('user.index');
+        Route::delete('/user/{user}', [AdminUserController::class, 'destroy'])->name('user.destroy');
+        Route::put('/user/{user}', [AdminUserController::class, 'update'])->name('user.update');
+
+
+
+
+
         Route::resource('/category', AdminCategoryController::class)->except('show');
-//        Route::name('category.')
-//        ->prefix('category')
-//        ->group(function() {
-//            Route::get('/', [AdminCategoryController::class, 'index'])->name('index');
-//            Route::match(['get', 'post'], '/create', [AdminCategoryController::class, 'create'])->name('create');
-//            Route::match(['get', 'post'],'/edit', [AdminCategoryController::class, 'edit'])->name('edit');
-//        });
 
         Route::resource('/news', AdminNewsController::class)->except('show');
-//        Route::name('news.')
-//        ->prefix('news')
-//        ->group(function() {
-//            Route::get('/', [AdminNewsController::class, 'index'])->name('index');
-//            Route::get('/create', [AdminNewsController::class, 'create'])->name('create');
-//            Route::post('/store', [AdminNewsController::class, 'store'])->name('store');
-//            Route::get('/{news}/edit', [AdminNewsController::class, 'edit'])->name('edit');
-//            Route::put('/{news}/update', [AdminNewsController::class, 'update'])->name('update');
-//            Route::delete('/{news}', [AdminNewsController::class, 'destroy'])->name('destroy');
-//        });
+
     });
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
+// Route::get('/login', [LoginController::class, 'index'])->name('login');
 
-Auth::routes();
+//Auth::routes();
+// Если вывести эти роуты вручную, только неокторые из всего списка, пока без регистрации:
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('logout', [LoginController::class, 'logout']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); // начальный шаблон для входа
 
+
+// для юзеров
+
+Route::match(['get', 'post'], '/profile', [ProfileController::class, 'update'])->name('updateProfile');
+Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [UserController::class, 'store'])->name('register');

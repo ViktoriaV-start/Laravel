@@ -7,6 +7,13 @@
         <h1 class="h2">Добавить категорию</h1>
     </div>
 
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <form method="POST" action="{{ route('admin.category.store') }}">
         @csrf
 
@@ -16,6 +23,14 @@
             <div class="col-md-8">
                 <input id="categoryTitle" type="text" class="form-control" name="title" value="{{ old('title') }}" autofocus>
             </div>
+            {{--            Логика для ошибки: блок будет генерироваться в случае ошибки --}}
+            @if($errors->has('title'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('title') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-3">
@@ -24,6 +39,14 @@
             <div class="col-md-8">
                 <input id="categorySlug" type="text" class="form-control" name="slug" value="{{ old('slug') }}" autofocus>
             </div>
+            {{--            Логика для ошибки: блок будет генерироваться в случае ошибки --}}
+            @if($errors->has('slug'))
+                <div class="col-md-8 me-2 offset-md-2 alert alert-danger mt-3" role="alert">
+                    @foreach($errors->get('slug') as $error)
+                        {{ $error }}
+                    @endforeach
+                </div>
+            @endif
         </div>
 
         <div class="form-group row mb-0">
