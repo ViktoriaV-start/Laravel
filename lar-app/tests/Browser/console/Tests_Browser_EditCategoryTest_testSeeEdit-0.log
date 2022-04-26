@@ -1,0 +1,8 @@
+[
+    {
+        "level": "SEVERE",
+        "message": "http:\/\/192.168.56.56\/js\/dashboard.js 5:2 Uncaught ReferenceError: feather is not defined",
+        "source": "javascript",
+        "timestamp": 1649258701544
+    }
+]

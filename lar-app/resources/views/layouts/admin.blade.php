@@ -27,10 +27,41 @@
             .main-color {
                 background-color: lightblue;
             }
+            .font-colored {
+                color: #1266e9;
+            }
+
+            .btn-special {
+                color: #0ca78b;
+                background-color: transparent;
+                border: none;
+                padding-left: 0;
+            }
 
             .btn-width {
                 width: 150px;
             }
+
+            .btn-colored {
+                color: #696969ff;
+                background-color: #ADD8E6FF;
+                height: 2.5rem;
+                font-size: 0.9rem;
+                width: 12rem;
+                border: none;
+            }
+
+            .btn-colored:hover {
+                background-color: #83afbd;
+            }
+
+            .btn-delete {
+                color: red;
+                background-color: transparent;
+                border: none;
+                padding-left: 0;
+            }
+
             .mt-0-6 {
                 margin-top: 0.6rem;
             }
@@ -54,9 +85,19 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <input class="form-control form-control-dark w-100" type="text" placeholder="Найти" aria-label="Search">
+            
             <div class="navbar-nav">
                 <div class="nav-item text-nowrap">
-                    <a class="nav-link px-3" href="#">Выход</a>
+{{--                    <a class="nav-link px-3" href="#">Выход</a>--}}
+                    <a class="nav-link px-3" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        Выход
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                        <a class="nav-link px-3" href="#">Выход</a>
+                    </form>
                 </div>
             </div>
         </header>
@@ -80,7 +121,7 @@
                             </li>
                             <li class="nav-item">
 {{--                                <a class="nav-link active" href="{{ route('admin.category.create') }}">--}}
-                                <a class="nav-link {{ request()->routeIs('admin.categories')?'active':'' }}" href="{{ route('admin.categories') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.category.index')?'active':'' }}" href="{{ route('admin.category.index') }}">
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-folder2 mb-1" viewBox="0 0 16 16">
                                         <path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-9zM2.5 3a.5.5 0 0 0-.5.5V6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5zM14 7H2v5.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V7z"/>
@@ -91,7 +132,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('admin.news')?'active':'' }}" href="{{ route('admin.news') }}">
+                                <a class="nav-link {{ request()->routeIs('admin.news.index')?'active':'' }}" href="{{ route('admin.news.index') }}">
+
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-list mb-1" viewBox="0 0 16 16">
                                         <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -103,15 +145,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link {{ request()->routeIs('admin.user.index')?'active':'' }}" href="{{ route('admin.user.index') }}">
 
-                                    <svg width="20" height="20" fill="currentColor" class="bi bi-images mb-1" viewBox="0 0 16 16">
-                                        <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
-                                        <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998 2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1 .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z"/>
-                                    </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill mb-1" viewBox="0 0 16 16">
+                                    <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                    <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                    <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                </svg>
 
                                     <span data-feather="users"></span>
-                                    Изображения
+                                    Пользователи
                                 </a>
                             </li>
 
